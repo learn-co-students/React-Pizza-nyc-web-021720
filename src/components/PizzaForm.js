@@ -1,16 +1,50 @@
 import React from "react"
 
-const PizzaForm = () => {
-  return(
+class PizzaForm extends React.Component{
+  
+  state = {
+    formInput:'',
+    size:"small",
+    checked: true
+  }
+
+  handleForm = (event)=> {
+    this.setState({
+      formInput: event.target.value
+    })
+  }
+
+  handleSize = (event) =>{
+    
+    this.setState({
+      size: event.target.value
+    })
+
+  }
+
+  createNew = () => {
+    let temp = {
+      topping: this.state.formInput,
+      size: this.state.size,
+      vegetarian: this.state.checked    
+    }
+    this.props.doPost(temp)
+  }
+
+
+  
+  
+  render(){
+
+    return(
       <div className="form-row">
         <div className="col-5">
-            <input type="text" className="form-control" placeholder="Pizza Topping" value={
-                //Pizza Topping Should Go Here
-                null
+            <input type="text" onChange={this.handleForm} className="form-control"  placeholder="Pizza Topping" value={
+               this.state.formInput
               }/>
         </div>
         <div className="col">
-          <select value={null} className="form-control">
+          <select value={this.state.size} onChange={this.handleSize} className="form-control">
             <option value="Small">Small</option>
             <option value="Medium">Medium</option>
             <option value="Large">Large</option>
@@ -31,11 +65,14 @@ const PizzaForm = () => {
           </div>
         </div>
         <div className="col">
-          <button type="submit" className="btn btn-success" onClick={console.log}>Submit</button>
+          <button type="submit" className="btn btn-success" onClick={this.createNew}>Submit</button>
         </div>
       </div>
 
   )
+    
+  }
+  
 }
 
 export default PizzaForm
